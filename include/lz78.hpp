@@ -34,7 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef LZ78_LZ78_HPP
 #define LZ78_LZ78_HPP
 
-#include <suffix_tree.hpp>
+#include <lz78_trie.hpp>
 #include <vector>
 #include <iostream>
 
@@ -56,7 +56,7 @@ namespace lz78 {
         }
 
         void decompress_phrase(const std::pair<size_type, value_type> &phrase,
-                               const suffix_tree<value_type> &m_suffix_tree,
+                               const lz78_trie<value_type> &m_suffix_tree,
                                std::vector<value_type> &result){
             auto pos = phrase.first;
             if(pos > 0){
@@ -72,21 +72,21 @@ namespace lz78 {
 
         template<class Iterator>
         lz78(const Iterator beg, const Iterator end){
-            suffix_tree<value_type> m_suffix_tree;
+            lz78_trie<value_type> m_lz78_trie;
             auto it = beg;
             while(it < end){
-                auto pos_char = m_suffix_tree.search(it, end);
-                m_suffix_tree.insert(pos_char.second, pos_char.first);
+                auto pos_char = m_lz78_trie.search(it, end);
+                m_lz78_trie.insert(pos_char.second, pos_char.first);
                 m_phrases.push_back(pos_char);
             }
         }
 
         std::vector<value_type> decompress(){
             std::vector<value_type> result;
-            suffix_tree<value_type> m_suffix_tree;
+            lz78_trie<value_type> m_lz78_trie;
             for(const auto &phrase : m_phrases){
-                decompress_phrase(phrase, m_suffix_tree, result);
-                m_suffix_tree.insert(phrase.second, phrase.first);
+                decompress_phrase(phrase, m_lz78_trie, result);
+                m_lz78_trie.insert(phrase.second, phrase.first);
             }
             return result;
         }

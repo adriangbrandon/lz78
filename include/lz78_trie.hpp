@@ -41,7 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace lz78 {
 
     template <class t_value = char>
-    class suffix_tree {
+    class lz78_trie {
 
     public:
         typedef t_value value_type;
@@ -53,7 +53,7 @@ namespace lz78 {
     private:
         std::vector<node_type> m_nodes;
 
-        void copy(const suffix_tree& p){
+        void copy(const lz78_trie& p){
             m_nodes = p.m_nodes;
         }
 
@@ -61,7 +61,7 @@ namespace lz78 {
 
         const std::vector<node_type> &nodes = m_nodes;
 
-        suffix_tree(){
+        lz78_trie(){
             m_nodes.push_back(node_type{});
         };
 
@@ -89,7 +89,7 @@ namespace lz78 {
         }
 
         //! Assignment move operation
-        suffix_tree& operator=(suffix_tree&& p) {
+        lz78_trie& operator=(lz78_trie&& p) {
             if (this != &p) {
                 m_nodes = std::move(p.m_nodes);
             }
@@ -97,7 +97,7 @@ namespace lz78 {
         }
 
         //! Assignment operator
-        suffix_tree& operator=(const suffix_tree& tree)
+        lz78_trie& operator=(const lz78_trie& tree)
         {
             if (this != &tree) {
                 copy(tree);
@@ -106,13 +106,13 @@ namespace lz78 {
         }
 
         //! Copy constructor
-        suffix_tree(const suffix_tree& p)
+        lz78_trie(const lz78_trie& p)
         {
             copy(p);
         }
 
         //! Move constructor
-        suffix_tree(suffix_tree&& p)
+        lz78_trie(lz78_trie&& p)
         {
             *this = std::move(p);
         }
@@ -122,7 +122,7 @@ namespace lz78 {
          *  You have to use set_vector to adjust the supported bit_vector.
          *  \param bp_support Object which is swapped.
          */
-        void swap(suffix_tree& p)
+        void swap(lz78_trie& p)
         {
             // m_bp.swap(bp_support.m_bp); use set_vector to set the supported bit_vector
             std::swap(m_nodes, p.m_nodes);
