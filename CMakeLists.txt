@@ -5,7 +5,7 @@ include(AppendCompilerFlags)
 
 project(LZ78)
 set(PROJECT_VENDOR "Adrián Gómez Brandón")
-set(CMAKE_PROJECT_NAME "LZ78")
+set(CMAKE_PROJECT_NAME "LZ")
 set(PROJECT_CONTACT "adrian.gbrandon@udc.es")
 set(CMAKE_INSTALL_PREFIX /home/adrian/software)
 
@@ -45,11 +45,20 @@ else()
     message(STATUS "CPU does NOT support SSE4.2")
 endif()
 
+add_subdirectory(external/sdsl-lite)
 
 include_directories(
         ${CMAKE_HOME_DIRECTORY}/include
+        ${CMAKE_BINARY_DIR}/external/sdsl-lite/include
+        ${CMAKE_BINARY_DIR}/external/sdsl-lite/external/libdivsufsort/include/
+        ${CMAKE_HOME_DIRECTORY}/external/sdsl-lite/external/FastPFor/headers/
         ${STXXL_INCLUDE_DIRS}
         )
 
-add_executable(lz78 src/main.cpp)
+add_executable(main src/main.cpp)
+target_link_libraries(main sdsl divsufsort divsufsort64)
+
 add_executable(lz78_parser src/lz78_parser.cpp)
+
+add_executable(lz77_parser src/lz77_parser.cpp)
+target_link_libraries(lz77_parser sdsl divsufsort divsufsort64)

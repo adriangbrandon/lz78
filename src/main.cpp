@@ -29,6 +29,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <iostream>
 #include <lz78.hpp>
+#include <lz77.hpp>
+#include <lz77_kkp2.hpp>
 
 
 //
@@ -42,7 +44,7 @@ int main(int argc, char **argv) {
 
     auto it = input.begin();
     auto end = input.end();
-    lz78::lz78<char> m_lz78(it, end);
+    lz::lz78<char> m_lz78(it, end);
     auto result = m_lz78.decompress();
     for(const auto &v : result){
         std::cout << v;
@@ -50,5 +52,10 @@ int main(int argc, char **argv) {
     std::cout << std::endl;
     std::cout << "Phrases: " << m_lz78.phrases.size() << std::endl;
 
+    lz::lz77_match<char> m_lz77_match(input.begin(), input.end());
+    m_lz77_match.print();
+
+
+    std::cout << std::distance(m_lz78.phrases.begin(), m_lz78.phrases.end()) << std::endl;
 
 }

@@ -31,14 +31,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Created by Adrián on 09/02/2019.
 //
 
-#ifndef LZ78_LZ78_HPP
-#define LZ78_LZ78_HPP
+#ifndef LZ_LZ78_HPP
+#define LZ_LZ78_HPP
 
 #include <lz78_trie.hpp>
 #include <vector>
 #include <iostream>
 
-namespace lz78 {
+namespace lz {
 
     template <class t_value = char>
     class lz78 {

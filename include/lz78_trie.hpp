@@ -31,14 +31,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Created by Adrián on 09/02/2019.
 //
 
-#ifndef LZ78_SUFFIX_TREE_HPP
-#define LZ78_SUFFIX_TREE_HPP
+#ifndef LZ_SUFFIX_TREE_HPP
+#define LZ_SUFFIX_TREE_HPP
 
 #include <stdint.h>
 #include <unordered_map>
 #include <vector>
 
-namespace lz78 {
+namespace lz {
 
     template <class t_value = char>
     class lz78_trie {

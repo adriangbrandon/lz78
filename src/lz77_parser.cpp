@@ -26,16 +26,19 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
 
-#include <iostream>
+
+//
+// Created by Adrián on 12/02/2019.
+//
+
+#include <vector>
+#include <sdsl/csa_bitcompressed.hpp>
 #include <file_util.hpp>
-#include <lz78.hpp>
-//
-// Created by Adrián on 10/02/2019.
-//
+#include <lz77_kkp2.hpp>
 
 int main(int argc, const char* argv[]) {
 
-    if(argc == 2){
+    if (argc == 2) {
 
         std::string input = argv[1];
         auto size = util::file::file_size(input) / sizeof(uint64_t);
@@ -44,9 +47,29 @@ int main(int argc, const char* argv[]) {
         in.read((char*) movements.data(), movements.size()*sizeof(uint64_t));
         in.close();
 
-        lz::lz78<uint64_t> m_lz78(movements.begin(), movements.end());
-        std::cout << "Decompressing: " << std::flush;
-        auto result = m_lz78.decompress();
+        /*sdsl::int_vector<> movs;
+        movs.resize(size);
+        for(uint64_t i = 0; i < movements.size(); ++i){
+            if(movements[i] == 0){
+                std::cout << "Hai 0" << std::endl;
+                exit(10);
+            }
+        }
+        std::copy(movements.begin(), movements.end(), movs.begin());
+        //movements.clear();
+
+        for(uint64_t i = 0; i < movs.size(); ++i){
+            if(movs[i] == 0){
+                std::cout << "Hai 0" << std::endl;
+                exit(10);
+            }
+        }
+        sdsl::csa_bitcompressed<sdsl::int_alphabet<>> m_csa;
+        sdsl::construct_im(m_csa, movs);*/
+
+        lz::lz77_kkp2<uint64_t> m_lz77(movements);
+        std::cout << m_lz77.phrases.size() << std::endl;
+        auto result = m_lz77.decompress();
         std::cout << "result.size(): " << result.size() << std::endl;
         if(result.size() != movements.size()){
             std::cout << "Error size" << std::endl;
@@ -58,9 +81,11 @@ int main(int argc, const char* argv[]) {
                 exit(1);
             }
         }
-        std::cout << "Phrases: " << m_lz78.phrases.size() << std::endl;
+        std::cout << "Done." << std::endl;
+
+
+
 
     }
-
 
 }
